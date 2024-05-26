@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .main{
+            width: min-content;
+        }
+    </style>
+</head>
+<body>
+    <div class="main">
+        <canvas id="myCanvas" width="300" height="150">
+            Sorry, your browser does not support canvas.
+        </canvas>
+        <input type="range" min="300" max="1000" value="300" class="slider" oninput="changeWidth(value)" >
+        <input type="range" min="150" max="1000" value="150" class="slider" oninput="changeHeight(value)" >
+        <input type="text"  id="text"  oninput="updateText(value)">
+        <input type="color" id="color" onchange="ChangeColor(value)" value="#ffffff">
+        <input type="range" min="10" max="100" value="50" class="slider" oninput="changeSize(value)" >
+        <input type="range" min="0" max="300" value="50" class="slider" oninput="changeX(value)" >
+        <input type="range" min="0" max="150" value="50" class="slider" oninput="changeY(value)" >
+    </div>
+    <script src="./app.js"></script>
+</body>
+</html>
