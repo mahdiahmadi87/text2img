@@ -1,13 +1,17 @@
 const canvas = document.getElementById("myCanvas")
 const cx = canvas.getContext("2d")
-let color = "white"
+let backColor = "#ffe17d"
+let color = '#97854b'
 let text = ""
 let size = 50
 let x = 50
 let y = 50
 
-canvas.style=`border:1px solid grey; background-color: ${color};`
 
+function ChangeBack(value){
+    backColor = value
+    updateText(text)
+}
 
 function ChangeColor(value){
     color = value
@@ -15,9 +19,9 @@ function ChangeColor(value){
 }
 
 function updateText(value){
-    clearDisplay(color)
+    clearDisplay(backColor)
     cx.font = `${size}px Arial`
-    cx.fillStyle = "blue"
+    cx.fillStyle = color
     cx.fillText(value, x, y)
     text = value
 }
@@ -25,11 +29,15 @@ function updateText(value){
 function changeWidth(value){
     canvas.width = value
     updateText(text)
+    let X = document.getElementById("x")
+    X.max = value
 }
 
 function changeHeight(value){
     canvas.height = value
     updateText(text)
+    let Y = document.getElementById("y")
+    Y.max = value
 }
 
 function changeSize(value){

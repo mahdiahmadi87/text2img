@@ -3,25 +3,50 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <style>
-        .main{
-            width: min-content;
-        }
-    </style>
+    <title>Text2Img</title>
+    <link rel="stylesheet" href="./style.css">
 </head>
 <body>
     <div class="main">
-        <canvas id="myCanvas" width="300" height="150">
+        <canvas id="myCanvas" width="300" height="150" class="canvas">
             Sorry, your browser does not support canvas.
         </canvas>
-        <input type="range" min="300" max="1000" value="300" class="slider" oninput="changeWidth(value)" >
-        <input type="range" min="150" max="1000" value="150" class="slider" oninput="changeHeight(value)" >
-        <input type="text"  id="text"  oninput="updateText(value)">
-        <input type="color" id="color" onchange="ChangeColor(value)" value="#ffffff">
-        <input type="range" min="10" max="100" value="50" class="slider" oninput="changeSize(value)" >
-        <input type="range" min="0" max="300" value="50" class="slider" oninput="changeX(value)" >
-        <input type="range" min="0" max="150" value="50" class="slider" oninput="changeY(value)" >
+        <div class="buts">
+            <div class="ins">
+                <div class="row">
+                    <p>width:</p>
+                    <input id="width" type="range" min="300" max="1080" value="300" class="slider" oninput="changeWidth(value)" >
+                </div>
+                <div class="row">
+                    <p>height:</p>
+                    <input id="height" type="range" min="150" max="540" value="150" class="slider" oninput="changeHeight(value)" >
+                </div>
+                <div class="row">
+                    <p>background color:</p>
+                    <input id="bacColor" type="color" id="color" class="color" onchange="ChangeBack(value)" value="#ffe17d">
+                    <p>text color:</p>
+                    <input id="color" type="color" id="color" class="color" onchange="ChangeColor(value)" value="#97854b">
+                </div>
+            </div>
+            <div class="ins">
+                <p>text:</p>
+                <input id="text" type="text"  id="text"  oninput="updateText(value)">
+            </div>
+            <div class="ins">
+                <div class="row">
+                    <p>font size:</p>
+                    <input id="size" type="range" min="10" max="100" value="50" class="slider" oninput="changeSize(value)" >
+                </div>
+                <div class="row">
+                    <p>X position:</p>
+                    <input id="x" type="range" min="0" max="300" value="50" class="slider" oninput="changeX(value)" >
+                </div>
+                <div class="row">
+                    <p>Y position:</p>
+                    <input id="y" type="range" min="0" max="150" value="50" class="slider" oninput="changeY(value)" >
+                </div>
+            </div>
+        </div>
     </div>
     <script src="./app.js"></script>
 </body>
