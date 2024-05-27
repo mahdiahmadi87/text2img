@@ -94,3 +94,10 @@ function clearDisplay(value){
     cx.fillRect(0, 0, canvas.width, canvas.height)
 }
 
+function download(){
+    let link = document.createElement('a');
+    link.download = 'canvas.png';
+    link.href = canvas.toDataURL()
+    link.click();
+  }
+
