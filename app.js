@@ -22,7 +22,13 @@ function updateText(value){
     clearDisplay(backColor)
     cx.font = `${fontSize}px FMT`
     cx.fillStyle = color
-    cx.fillText(value, x, y)
+    let l = value.split("\n")
+    cx.save()
+    l.forEach(element => {
+        cx.fillText(element, x, y)
+        cx.translate(0, fontSize)
+    });
+    cx.restore()
     text = value
 }
 
@@ -87,6 +93,4 @@ function clearDisplay(value){
     cx.fillStyle = value
     cx.fillRect(0, 0, canvas.width, canvas.height)
 }
-
-
 
