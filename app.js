@@ -3,7 +3,7 @@ const cx = canvas.getContext("2d")
 let backColor = "#ffe17d"
 let color = '#97854b'
 let text = ""
-let size = 50
+let fontSize = 50
 let x = 50
 let y = 50
 
@@ -20,13 +20,21 @@ function ChangeColor(value){
 
 function updateText(value){
     clearDisplay(backColor)
-    cx.font = `${size}px Arial`
+    cx.font = `${fontSize}px Arial`
     cx.fillStyle = color
     cx.fillText(value, x, y)
     text = value
 }
 
 function changeWidth(value){
+    let width = document.getElementById("width")
+    let widthNum = document.getElementById("widthNum")
+    if (value < 300){
+        widthNum.value = 300
+        return
+    }
+    width.value = value
+    widthNum.value = value
     canvas.width = value
     updateText(text)
     let X = document.getElementById("x")
@@ -34,6 +42,14 @@ function changeWidth(value){
 }
 
 function changeHeight(value){
+    let height = document.getElementById("height")
+    let heightNum = document.getElementById("heightNum")
+    if (value < 150){
+        heightNum.value = 150
+        return
+    }
+    height.value = value
+    heightNum.value = value
     canvas.height = value
     updateText(text)
     let Y = document.getElementById("y")
@@ -41,16 +57,28 @@ function changeHeight(value){
 }
 
 function changeSize(value){
-    size = value
+    let size = document.getElementById("size")
+    let sizeNum = document.getElementById("sizeNum")
+    if (value < 10){
+        sizeNum.value = 10
+        return
+    }
+    size.value = value
+    sizeNum.value = value
+    fontSize = value
     updateText(text)
 }
 
 function changeX(value){
+    document.getElementById("x").value = value
+    document.getElementById("xNum").value = value
     x = value
     updateText(text)
 }
 
 function changeY(value){
+    document.getElementById("y").value = value
+    document.getElementById("yNum").value = value
     y = value
     updateText(text)
 }

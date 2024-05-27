@@ -16,10 +16,12 @@
                 <div class="row">
                     <p>width:</p>
                     <input id="width" type="range" min="300" max="1080" value="300" class="slider" oninput="changeWidth(value)" >
+                    <input id="widthNum" type="number" min="300" value="300" class="num" onchange="changeWidth(value)">
                 </div>
                 <div class="row">
                     <p>height:</p>
                     <input id="height" type="range" min="150" max="540" value="150" class="slider" oninput="changeHeight(value)" >
+                    <input id="heightNum" type="number" min="150" value="150" class="num" onchange="changeHeight(value)">
                 </div>
                 <div class="row">
                     <p>background color:</p>
@@ -36,14 +38,17 @@
                 <div class="row">
                     <p>font size:</p>
                     <input id="size" type="range" min="10" max="100" value="50" class="slider" oninput="changeSize(value)" >
+                    <input id="sizeNum" type="number" min="10" value="50" class="num" onchange="changeSize(value)">
                 </div>
                 <div class="row">
                     <p>X position:</p>
                     <input id="x" type="range" min="0" max="300" value="50" class="slider" oninput="changeX(value)" >
+                    <input id="xNum" type="number" min="0" value="50" class="num" onchange="changeX(value)">
                 </div>
                 <div class="row">
                     <p>Y position:</p>
                     <input id="y" type="range" min="0" max="150" value="50" class="slider" oninput="changeY(value)" >
+                    <input id="yNum" type="number" min="0" value="50" class="num" onchange="changeY(value)">
                 </div>
             </div>
         </div>
