@@ -20,7 +20,7 @@ function ChangeColor(value){
 
 function updateText(value){
     clearDisplay(backColor)
-    cx.font = `${fontSize}px Arial`
+    cx.font = `${fontSize}px FMT`
     cx.fillStyle = color
     cx.fillText(value, x, y)
     text = value
