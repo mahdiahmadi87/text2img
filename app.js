@@ -19,6 +19,9 @@ function ChangeColor(value){
 }
 
 function updateText(value){
+    if (value.endsWith("!") && value.match(/[آ-ی]/g) != null){
+        value = value.slice(-1) + value.substring(0, value.length -1)
+    }
     clearDisplay(backColor)
     cx.font = `${fontSize}px FMT`
     cx.fillStyle = color
