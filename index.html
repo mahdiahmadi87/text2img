@@ -13,47 +13,89 @@
         </canvas>
         <div class="buts">
             <div class="ins">
+                <!-- Background Options -->
+                <div class="row">
+                    <p>Background Type:</p>
+                    <label><input type="radio" name="bgType" value="color" checked onchange="handleBackgroundTypeChange(this.value)"> Color</label>
+                    <label><input type="radio" name="bgType" value="image" onchange="handleBackgroundTypeChange(this.value)"> Image</label>
+                </div>
+                <div class="row" id="bgColorRow">
+                    <p>Background Color:</p>
+                    <input id="backColorInput" type="color" class="color" onchange="ChangeBack(this.value)" value="#ffe17d">
+                </div>
+                <div class="row" id="bgImageRow" style="display: none;">
+                     <p>Choose Image:</p>
+                    <input type="file" id="bgImageFile" accept="image/*" onchange="handleImageUpload(event)">
+                </div>
+
+                <!-- Canvas Dimensions -->
                 <div class="row">
                     <p>Width:</p>
-                    <input id="width" type="range" min="300" max="1080" value="300" class="slider" oninput="changeWidth(value)" >
-                    <input id="widthNum" type="number" min="300" value="300" class="num" onchange="changeWidth(value)">
+                    <input id="width" type="range" min="300" max="1920" value="300" class="slider" oninput="changeWidth(this.value)" >
+                    <input id="widthNum" type="number" min="300" value="300" class="num" onchange="changeWidth(this.value)">
                 </div>
                 <div class="row">
                     <p>Height:</p>
-                    <input id="height" type="range" min="150" max="540" value="150" class="slider" oninput="changeHeight(value)" >
-                    <input id="heightNum" type="number" min="150" value="150" class="num" onchange="changeHeight(value)">
+                    <input id="height" type="range" min="150" max="1080" value="150" class="slider" oninput="changeHeight(this.value)" >
+                    <input id="heightNum" type="number" min="150" value="150" class="num" onchange="changeHeight(this.value)">
                 </div>
-                <div class="row">
-                    <p>Background color:</p>
-                    <input id="bacColor" type="color" id="color" class="color" onchange="ChangeBack(value)" value="#ffe17d">
-                    <p>Text color:</p>
-                    <input id="color" type="color" id="color" class="color" onchange="ChangeColor(value)" value="#97854b">
+                <div class="row" id="aspectLockRow" style="display: none;">
+                    <p></p> 
+                    <label>
+                        <input type="checkbox" id="aspectLock" onchange="toggleAspectRatioLock(this.checked)"> Lock Aspect Ratio
+                    </label>
                 </div>
             </div>
             <div class="ins">
                 <p>Text:</p>
-                <textarea name="text" cols="40" rows="3" id="text" oninput="updateText(value)"></textarea>
+                <textarea name="text" cols="40" rows="3" id="text" oninput="updateText(this.value)"></textarea>
+            </div>
+            <div class="ins">
+                <!-- Text Properties -->
+                 <div class="row">
+                    <p>Text Color:</p>
+                    <input id="color" type="color" class="color" onchange="ChangeColor(this.value)" value="#97854b">
+                </div>
+                <div class="row">
+                    <p>Text Align:</p>
+                    <div class="align-group">
+                        <label><input type="radio" name="textAlign" value="left" checked onchange="changeTextAlign(this.value)"> Left</label>
+                        <label><input type="radio" name="textAlign" value="center" onchange="changeTextAlign(this.value)"> Center</label>
+                        <label><input type="radio" name="textAlign" value="right" onchange="changeTextAlign(this.value)"> Right</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <p>Font:</p>
+                    <select id="fontSelector" onchange="changeFont(this.value)">
+                        <option value="FMT">FMT</option>
+                        <option value="Vazirmatn">Vazirmatn</option>
+                        <option value="Behdad">Behdad</option>
+                        <option value="Mikhak">Mikhak</option>
+                        <option value="Arial">Arial</option>
+                        <option value="Tahoma">Tahoma</option>
+                        <option value="Courier New">Courier New</option>
+                        <option value="Verdana">Verdana</option>
+                    </select>
+                </div>
+                <div class="row">
+                    <p>Font Size:</p>
+                    <input id="size" type="range" min="10" max="200" value="50" class="slider" oninput="changeSize(this.value)" >
+                    <input id="sizeNum" type="number" min="10" value="50" class="num" onchange="changeSize(this.value)">
+                </div>
+                <div class="row">
+                    <p>X Position:</p>
+                    <input id="x" type="range" min="0" max="300" value="50" class="slider" oninput="changeX(this.value)" >
+                    <input id="xNum" type="number" min="0" value="50" class="num" onchange="changeX(this.value)">
+                </div>
+                <div class="row">
+                    <p>Y Position:</p>
+                    <input id="y" type="range" min="0" max="150" value="50" class="slider" oninput="changeY(this.value)" >
+                    <input id="yNum" type="number" min="0" value="50" class="num" onchange="changeY(this.value)">
+                </div>
             </div>
             <div class="ins">
                 <div class="row">
-                    <p>Font size:</p>
-                    <input id="size" type="range" min="10" max="100" value="50" class="slider" oninput="changeSize(value)" >
-                    <input id="sizeNum" type="number" min="10" value="50" class="num" onchange="changeSize(value)">
-                </div>
-                <div class="row">
-                    <p>X position:</p>
-                    <input id="x" type="range" min="0" max="300" value="50" class="slider" oninput="changeX(value)" >
-                    <input id="xNum" type="number" min="0" value="50" class="num" onchange="changeX(value)">
-                </div>
-                <div class="row">
-                    <p>Y position:</p>
-                    <input id="y" type="range" min="0" max="150" value="50" class="slider" oninput="changeY(value)" >
-                    <input id="yNum" type="number" min="0" value="50" class="num" onchange="changeY(value)">
-                </div>
-            </div>
-            <div class="ins">
-                <div class="row">
-                    <input type="button" class="download" value="Download" onclick="download()">
+                    <input type="button" class="download" value="Download Image" onclick="download()">
                 </div>
             </div>
         </div>

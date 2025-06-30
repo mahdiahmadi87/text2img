@@ -1,106 +1,177 @@
-const canvas = document.getElementById("myCanvas")
-const cx = canvas.getContext("2d")
-let backColor = "#ffe17d"
-let color = '#97854b'
-let text = ""
-let fontSize = 50
-let x = 50
-let y = 50
+const canvas = document.getElementById("myCanvas");
+const cx = canvas.getContext("2d");
+let backColor = "#ffe17d";
+let color = '#97854b';
+let text = "";
+let fontSize = 50;
+let x = 50; // Default X for LTR start
+let y = 50;
+let fontName = 'FMT';
 
+// Variables
+let backgroundType = 'color';
+let backgroundImage = null;
+let imageAspectRatio = 1;
+let isAspectRatioLocked = false;
+let textAlign = 'left'; // Default alignment is now 'left'
 
-function ChangeBack(value){
-    backColor = value
-    updateText(text)
-}
+// UI Element References
+const widthSlider = document.getElementById("width");
+const widthNum = document.getElementById("widthNum");
+const heightSlider = document.getElementById("height");
+const heightNum = document.getElementById("heightNum");
+const aspectLockRow = document.getElementById('aspectLockRow');
+const aspectLockCheckbox = document.getElementById('aspectLock');
+const bgColorRow = document.getElementById('bgColorRow');
+const bgImageRow = document.getElementById('bgImageRow');
 
-function ChangeColor(value){
-    color = value
-    updateText(text)
-}
+// --- Functions ---
 
-function updateText(value){
-    if (value.endsWith("!") && value.match(/[آ-ی]/g) != null){
-        value = value.slice(-1) + value.substring(0, value.length -1)
+function handleBackgroundTypeChange(type) {
+    backgroundType = type;
+    bgColorRow.style.display = (type === 'color') ? 'flex' : 'none';
+    bgImageRow.style.display = (type === 'image') ? 'flex' : 'none';
+    
+    if (type === 'image') {
+        if (backgroundImage) aspectLockRow.style.display = 'flex';
+    } else {
+        aspectLockRow.style.display = 'none';
+        isAspectRatioLocked = false;
+        aspectLockCheckbox.checked = false;
+        changeWidth(widthNum.value);
+        changeHeight(heightNum.value);
     }
-    clearDisplay(backColor)
-    cx.font = `${fontSize}px FMT`
-    cx.fillStyle = color
-    let l = value.split("\n")
-    cx.save()
-    l.forEach(element => {
-        cx.fillText(element, x, y)
-        cx.translate(0, fontSize)
+    updateText(text); 
+}
+
+function handleImageUpload(event) {
+    const file = event.target.files[0];
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            const img = new Image();
+            img.onload = function() {
+                backgroundImage = img;
+                imageAspectRatio = img.width / img.height;
+                
+                canvas.width = img.width;
+                canvas.height = img.height;
+
+                widthSlider.value = img.width;
+                widthNum.value = img.width;
+                heightSlider.value = img.height;
+                heightNum.value = img.height;
+                document.getElementById('x').max = img.width;
+                document.getElementById('y').max = img.height;
+
+                aspectLockRow.style.display = 'flex';
+                aspectLockCheckbox.checked = true;
+                isAspectRatioLocked = true;
+                
+                changeTextAlign(textAlign); // Re-apply alignment to set default X
+            };
+            img.src = e.target.result;
+        };
+        reader.readAsDataURL(file);
+    }
+}
+
+function changeTextAlign(align) {
+    textAlign = align;
+    // Auto-adjust X for a better user experience when changing alignment
+    if (align === 'center') {
+        x = Math.round(canvas.width / 2);
+    } else if (align === 'right') {
+        x = canvas.width - 50;
+    } else { // left
+        x = 50;
+    }
+    x = Math.max(0, Math.min(canvas.width, x));
+    
+    document.getElementById('x').value = x;
+    document.getElementById('xNum').value = x;
+
+    updateText(text);
+}
+
+
+function toggleAspectRatioLock(isLocked) { isAspectRatioLocked = isLocked; }
+function changeFont(value) { fontName = value; updateText(text); }
+
+function changeWidth(value) {
+    const newWidth = parseInt(value, 10);
+    widthSlider.value = newWidth;
+    widthNum.value = newWidth;
+    canvas.width = newWidth;
+    document.getElementById('x').max = newWidth;
+
+    if (backgroundType === 'image' && isAspectRatioLocked) {
+        const newHeight = Math.round(newWidth / imageAspectRatio);
+        heightSlider.value = newHeight;
+        heightNum.value = newHeight;
+        canvas.height = newHeight;
+        document.getElementById('y').max = newHeight;
+    }
+    updateText(text);
+}
+
+function changeHeight(value) {
+    const newHeight = parseInt(value, 10);
+    heightSlider.value = newHeight;
+    heightNum.value = newHeight;
+    canvas.height = newHeight;
+    document.getElementById('y').max = newHeight;
+
+    if (backgroundType === 'image' && isAspectRatioLocked) {
+        const newWidth = Math.round(newHeight * imageAspectRatio);
+        widthSlider.value = newWidth;
+        widthNum.value = newWidth;
+        canvas.width = newWidth;
+        document.getElementById('x').max = newWidth;
+    }
+    updateText(text);
+}
+
+function updateText(value) {
+    text = value; // Keep the raw text
+    
+    clearDisplay();
+
+    // Set text properties before drawing
+    cx.textAlign = textAlign;
+    cx.font = `${fontSize}px ${fontName}`;
+    cx.fillStyle = color;
+    
+    const lines = text.split("\n");
+    
+    cx.save();
+    lines.forEach(line => {
+        cx.fillText(line, x, y);
+        cx.translate(0, parseInt(fontSize, 10));
     });
-    cx.restore()
-    text = value
+    cx.restore();
 }
 
-function changeWidth(value){
-    let width = document.getElementById("width")
-    let widthNum = document.getElementById("widthNum")
-    if (value < 300){
-        widthNum.value = 300
-        return
+function clearDisplay() {
+    if (backgroundType === 'image' && backgroundImage) {
+        cx.drawImage(backgroundImage, 0, 0, canvas.width, canvas.height);
+    } else {
+        cx.fillStyle = backColor;
+        cx.fillRect(0, 0, canvas.width, canvas.height);
     }
-    width.value = value
-    widthNum.value = value
-    canvas.width = value
-    updateText(text)
-    let X = document.getElementById("x")
-    X.max = value
 }
 
-function changeHeight(value){
-    let height = document.getElementById("height")
-    let heightNum = document.getElementById("heightNum")
-    if (value < 150){
-        heightNum.value = 150
-        return
-    }
-    height.value = value
-    heightNum.value = value
-    canvas.height = value
-    updateText(text)
-    let Y = document.getElementById("y")
-    Y.max = value
-}
+function ChangeBack(value) { backColor = value; if (backgroundType === 'color') updateText(text); }
+function ChangeColor(value) { color = value; updateText(text); }
+function changeSize(value) { fontSize = value; document.getElementById("size").value = value; document.getElementById("sizeNum").value = value; updateText(text); }
+function changeX(value) { x = value; document.getElementById("x").value = value; document.getElementById("xNum").value = value; updateText(text); }
+function changeY(value) { y = value; document.getElementById("y").value = value; document.getElementById("yNum").value = value; updateText(text); }
 
-function changeSize(value){
-    let size = document.getElementById("size")
-    let sizeNum = document.getElementById("sizeNum")
-    if (value < 10){
-        sizeNum.value = 10
-        return
-    }
-    size.value = value
-    sizeNum.value = value
-    fontSize = value
-    updateText(text)
-}
-
-function changeX(value){
-    document.getElementById("x").value = value
-    document.getElementById("xNum").value = value
-    x = value
-    updateText(text)
-}
-
-function changeY(value){
-    document.getElementById("y").value = value
-    document.getElementById("yNum").value = value
-    y = value
-    updateText(text)
-}
-
-function clearDisplay(value){
-    cx.fillStyle = value
-    cx.fillRect(0, 0, canvas.width, canvas.height)
-}
-
-function download(){
-    let link = document.createElement('a');
-    link.download = 'canvas.png';
-    link.href = canvas.toDataURL()
+function download() {
+    const link = document.createElement('a');
+    link.download = 'canvas-image.png';
+    link.href = canvas.toDataURL("image/png");
     link.click();
-  }
+}
 
+document.addEventListener('DOMContentLoaded', () => { updateText(''); });
