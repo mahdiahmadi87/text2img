@@ -3,8 +3,13 @@
     src: url("./FMT.ttf") format("truetype");
 }
 
-body{
+body {
     background-color: rgb(255, 230, 160);
+    font-family: sans-serif;
+}
+
+.main {
+    /* No direction property needed for LTR */
 }
 
 .canvas {
@@ -12,7 +17,7 @@ body{
 	margin: 40px auto 10px auto;
 	display: block;
 	border-radius: 15px;
-	background-color: rgb(255, 225, 125);
+    max-width: 90%; 
 }
 
 .slider {
@@ -26,43 +31,89 @@ body{
     margin: auto 10px;
 }
 
-.num{
-    width: 50px;
+.num {
+    width: 60px;
     height: 30px;
     border-radius: 10px;    
     margin: auto 0;
+    text-align: center;
+    border: 1px solid #ccc;
 }
 
-.color{
+.color {
     width: 30px;
 	height: 30px;
     border-radius: 15px;
 	background: #d3d3d3;
 	align-items: center;
     margin: auto 10px;
+    padding: 2px;
+    border: 1px solid #ccc;
 }
 
-.download{
+.download {
     width: 100%;
     height: 50px;
     font-size: 20px;
     background-color: #ffe17d;
     border: 5px #97854b solid;
     border-radius: 25px;
-
+    cursor: pointer;
+}
+.download:hover {
+    background-color: #fdd761;
 }
 
 .buts {
-    padding: 10px auto;
-    width: 320px;
+    padding: 10px;
+    max-width: 600px;
     display: block;
-    margin: 40px auto 10px auto;
-
+    margin: 20px auto;
+    border: 1px solid #ddd;
+    border-radius: 15px;
+    background-color: #fff8e1;
 }
+
 .ins {
 	display: grid;
 	padding: 10px;
+    border-bottom: 1px solid #eee;
 }
+.ins:last-child {
+    border-bottom: none;
+}
+
 .row {
     display: flex;
+    align-items: center;
+    margin: 8px 0;
+}
+.row p {
+    min-width: 130px; /* Adjusted for English labels */
+    margin: 0;
+    margin-right: 10px; /* Spacing for LTR */
+}
+.row label {
+    margin: 0 5px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+}
+
+.align-group {
+    display: flex;
+    flex-grow: 1;
+    justify-content: space-around;
+    background-color: #f0f0f0;
+    border-radius: 10px;
+    padding: 2px;
+}
+
+.row select {
+    flex-grow: 1;
+    height: 35px;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    padding: 0 5px;
+    background-color: white;
 }
