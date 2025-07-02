@@ -2,15 +2,24 @@
     font-family: 'FMT';
     src: url("./FMT.ttf") format("truetype");
 }
+@font-face {
+    font-family: 'Behdad';
+    src: url("./Behdad.ttf") format("truetype");
+}
+@font-face {
+    font-family: 'Mikhak';
+    src: url("./Mikhak.ttf") format("truetype");
+}
+@font-face {
+    font-family: 'Vazirmatn';
+    src: url("./Vazirmatn.ttf") format("truetype");
+}
 
 body {
     background-color: rgb(255, 230, 160);
     font-family: sans-serif;
 }
 
-.main {
-    /* No direction property needed for LTR */
-}
 
 .canvas {
 	border: 2px black solid;
@@ -89,9 +98,9 @@ body {
     margin: 8px 0;
 }
 .row p {
-    min-width: 130px; /* Adjusted for English labels */
+    min-width: 130px; 
     margin: 0;
-    margin-right: 10px; /* Spacing for LTR */
+    margin-right: 10px; 
 }
 .row label {
     margin: 0 5px;

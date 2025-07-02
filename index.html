@@ -13,7 +13,6 @@
         </canvas>
         <div class="buts">
             <div class="ins">
-                <!-- Background Options -->
                 <div class="row">
                     <p>Background Type:</p>
                     <label><input type="radio" name="bgType" value="color" checked onchange="handleBackgroundTypeChange(this.value)"> Color</label>
@@ -28,7 +27,6 @@
                     <input type="file" id="bgImageFile" accept="image/*" onchange="handleImageUpload(event)">
                 </div>
 
-                <!-- Canvas Dimensions -->
                 <div class="row">
                     <p>Width:</p>
                     <input id="width" type="range" min="300" max="1920" value="300" class="slider" oninput="changeWidth(this.value)" >
@@ -51,7 +49,6 @@
                 <textarea name="text" cols="40" rows="3" id="text" oninput="updateText(this.value)"></textarea>
             </div>
             <div class="ins">
-                <!-- Text Properties -->
                  <div class="row">
                     <p>Text Color:</p>
                     <input id="color" type="color" class="color" onchange="ChangeColor(this.value)" value="#97854b">
