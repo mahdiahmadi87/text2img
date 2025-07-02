@@ -4,18 +4,16 @@ let backColor = "#ffe17d";
 let color = '#97854b';
 let text = "";
 let fontSize = 50;
-let x = 50; // Default X for LTR start
+let x = 50; 
 let y = 50;
 let fontName = 'FMT';
 
-// Variables
 let backgroundType = 'color';
 let backgroundImage = null;
 let imageAspectRatio = 1;
 let isAspectRatioLocked = false;
-let textAlign = 'left'; // Default alignment is now 'left'
+let textAlign = 'left'; 
 
-// UI Element References
 const widthSlider = document.getElementById("width");
 const widthNum = document.getElementById("widthNum");
 const heightSlider = document.getElementById("height");
@@ -25,7 +23,6 @@ const aspectLockCheckbox = document.getElementById('aspectLock');
 const bgColorRow = document.getElementById('bgColorRow');
 const bgImageRow = document.getElementById('bgImageRow');
 
-// --- Functions ---
 
 function handleBackgroundTypeChange(type) {
     backgroundType = type;
@@ -68,7 +65,7 @@ function handleImageUpload(event) {
                 aspectLockCheckbox.checked = true;
                 isAspectRatioLocked = true;
                 
-                changeTextAlign(textAlign); // Re-apply alignment to set default X
+                changeTextAlign(textAlign); 
             };
             img.src = e.target.result;
         };
@@ -78,7 +75,6 @@ function handleImageUpload(event) {
 
 function changeTextAlign(align) {
     textAlign = align;
-    // Auto-adjust X for a better user experience when changing alignment
     if (align === 'center') {
         x = Math.round(canvas.width / 2);
     } else if (align === 'right') {
@@ -133,11 +129,10 @@ function changeHeight(value) {
 }
 
 function updateText(value) {
-    text = value; // Keep the raw text
+    text = value; 
     
     clearDisplay();
 
-    // Set text properties before drawing
     cx.textAlign = textAlign;
     cx.font = `${fontSize}px ${fontName}`;
     cx.fillStyle = color;
@@ -174,4 +169,24 @@ function download() {
     link.click();
 }
 
-document.addEventListener('DOMContentLoaded', () => { updateText(''); });
+const fontFiles = [
+    { name: 'FMT', file: './FMT.ttf' },
+    { name: 'Behdad', file: './Behdad.ttf' },
+    { name: 'Mikhak', file: './Mikhak.ttf' },
+    { name: 'Vazirmatn', file: './Vazirmatn.ttf' }
+];
+
+async function loadFonts() {
+    const promises = fontFiles.map(f =>
+        new FontFace(f.name, `url(${f.file})`).load().then(font => {
+            document.fonts.add(font);
+        })
+    );
+    await Promise.all(promises);
+}
+
+
+document.addEventListener('DOMContentLoaded', async () => {
+    await loadFonts();
+    updateText('');
+});
